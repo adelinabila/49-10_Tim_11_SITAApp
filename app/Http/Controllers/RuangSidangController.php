@@ -9,8 +9,9 @@ class RuangSidangController extends Controller
 {
     public function index()
     {
-        $ruangan = RuangSidang::orderBy('id', 'desc')->get();
-        return view('ruang_sidang.index', compact('ruangan'));
+        $ruangs = RuangSidang::latest()->get();
+
+        return view('ruang_sidang.index', compact('ruangs'));
     }
 
     public function create()
@@ -27,7 +28,7 @@ class RuangSidangController extends Controller
             'status_ruangan' => 'required',
         ]);
 
-        $fasilitas = $request->has('fasilitas') ? implode(", ", $request->fasilitas) : "-";
+        $fasilitas = $request->has('fasilitas') ? implode(', ', (array) $request->fasilitas) : '-';
 
         RuangSidang::create([
             'kode_ruangan' => $request->kode_ruangan,
@@ -43,7 +44,8 @@ class RuangSidangController extends Controller
     public function edit($id)
     {
         $data = RuangSidang::findOrFail($id);
-        $fasilitas_array = explode(", ", $data->fasilitas);
+        $fasilitas_array = explode(', ', (string) $data->fasilitas);
+
         return view('ruang_sidang.edit', compact('data', 'fasilitas_array'));
     }
 
@@ -57,7 +59,7 @@ class RuangSidangController extends Controller
         ]);
 
         $ruangan = RuangSidang::findOrFail($id);
-        $fasilitas_baru = $request->has('fasilitas') ? implode(", ", $request->fasilitas) : "-";
+        $fasilitas_baru = $request->has('fasilitas') ? implode(', ', (array) $request->fasilitas) : '-';
 
         $ruangan->update([
             'kode_ruangan' => $request->kode_ruangan,
