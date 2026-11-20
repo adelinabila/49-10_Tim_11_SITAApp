@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Protects the Mahasiswa pages:
- *   1. the visitor must be logged in, otherwise they go to the login page
- *   2. the user's "role" must be one of the allowed roles, otherwise 403 (forbidden)
- *
- * Use it on a route like:  MahasiswaAccess::class . ':admin,dosen'
- */
 class MahasiswaAccess
 {
     // Roles that are allowed when the route does not list any.
