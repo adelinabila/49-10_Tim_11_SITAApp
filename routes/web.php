@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TopikController;
 
 Route::get('/', function () {
     return auth()->check() ? redirect('/dashboard') : redirect('/login');
@@ -21,9 +22,24 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // Menu 4 Modul (Placeholder sementara sebelum tiap anggota mengganti dengan Resource Controller masing-masing)
-    Route::view('/topik', 'coming-soon', ['modul' => 'Modul A: Topik & Bidang Minat', 'pic' => 'Individu A'])->name('topik.index');
-    Route::view('/dosen', 'coming-soon', ['modul' => 'Modul B: Dosen Pembimbing', 'pic' => 'Individu B (Adel)'])->name('dosen.index');
-    Route::view('/mahasiswa', 'coming-soon', ['modul' => 'Modul C: Data Mahasiswa', 'pic' => 'Individu C'])->name('mahasiswa.index');
-    Route::view('/ruang', 'coming-soon', ['modul' => 'Modul D: Ruang & Fasilitas Sidang', 'pic' => 'Individu D'])->name('ruang.index');
+    // Modul A: Topik & Bidang Minat
+    Route::resource('topik', TopikController::class)->except(['show']);
+
+    // Modul B: Dosen Pembimbing
+    Route::view('/dosen', 'coming-soon', [
+        'modul' => 'Modul B: Dosen Pembimbing',
+        'pic' => 'Individu B (Adel)'
+    ])->name('dosen.index');
+
+    // Modul C: Data Mahasiswa
+    Route::view('/mahasiswa', 'coming-soon', [
+        'modul' => 'Modul C: Data Mahasiswa',
+        'pic' => 'Individu C'
+    ])->name('mahasiswa.index');
+
+    // Modul D: Ruang & Fasilitas Sidang
+    Route::view('/ruang', 'coming-soon', [
+        'modul' => 'Modul D: Ruang & Fasilitas Sidang',
+        'pic' => 'Individu D'
+    ])->name('ruang.index');
 });
