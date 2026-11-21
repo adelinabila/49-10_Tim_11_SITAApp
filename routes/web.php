@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\DosenController;
 Route::get('/', function () {
     return auth()->check() ? redirect('/dashboard') : redirect('/login');
 });
@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 
     // Menu 4 Modul (Placeholder sementara sebelum tiap anggota mengganti dengan Resource Controller masing-masing)
     Route::view('/topik', 'coming-soon', ['modul' => 'Modul A: Topik & Bidang Minat', 'pic' => 'Individu A'])->name('topik.index');
-    Route::view('/dosen', 'coming-soon', ['modul' => 'Modul B: Dosen Pembimbing', 'pic' => 'Individu B (Adel)'])->name('dosen.index');
+    Route::resource('dosen', DosenController::class)->except(['show']);
     Route::view('/mahasiswa', 'coming-soon', ['modul' => 'Modul C: Data Mahasiswa', 'pic' => 'Individu C'])->name('mahasiswa.index');
     Route::view('/ruang', 'coming-soon', ['modul' => 'Modul D: Ruang & Fasilitas Sidang', 'pic' => 'Individu D'])->name('ruang.index');
 });
